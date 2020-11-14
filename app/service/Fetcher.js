@@ -2,13 +2,15 @@ const axios = require('axios');
 
 const fetch = async (url) => {
     try {
-        const response = await axios.get(url);
+        const response = await axios({
+            method:'GET',
+            url:url
+        });
         
         if (response.status === 200) {
             return response.data;
         }
     } catch (error) {
-        console.error(error);
         throw "Error fetching URL\n" + url + "\n" + error;
     }
 }

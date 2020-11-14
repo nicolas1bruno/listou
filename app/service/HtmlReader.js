@@ -66,12 +66,23 @@ function rsRead(html) {
             itens.push(item);
         }
         
+        /*
+        //Dados NFCe
+        let dadosNFCe = root.querySelectorAll("table")[7].querySelectorAll("td");
+        console.log(dadosNFCe !== null);
+        console.log(dadosNFCe !== undefined);
+        console.log(dadosNFCe[0].rawText);
+
+        nfce.numero = dadosNFCe[0].rawText.match('NFC-e nº: \d+')[0].replace('NFC-e nº: ', '');
+        nfce.serie = dadosNFCe[0].rawText.match('Série: \d+')[0].replace('Série: ', '');
+        nfce.dataEmissao = dadosNFCe[0].rawText.match('Data de Emissão: .+')[0].replace('Data de Emissão: ', '');
+        */
         nfce.emitente = emitente;
         nfce.itens = itens;
 
         return nfce;
     } catch (error) {
-        throw "Error reading NFC-e - RS\n{error}";
+        throw "Error reading NFC-e - RS\n" + error;
     }
 }
 

@@ -30,8 +30,8 @@ verifyToken = (req, res, next) => {
 
 };
 
-
 const authJwt = {
   verifyToken
 };
+
 module.exports = authJwt;

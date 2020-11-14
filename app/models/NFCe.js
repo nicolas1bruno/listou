@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let NFCeSchema = new Schema({
-    customer: {
+    emitente: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Emitente'
+    },
+    consumidor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },

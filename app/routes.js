@@ -80,6 +80,6 @@ router.post("/authenticate/signup", Register.register);
 router.post("/authenticate/signin", Auth.signin);
 
 // NFC-e routes'
-router.post("/nfce/decode", [middlewareAuth.verifyToken], NFCe.decode);
+router.post("/nfce/new", [middlewareAuth.verifyToken], NFCe.new);
 
 module.exports = router;

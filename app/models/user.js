@@ -20,8 +20,17 @@ let UserSchema = new Schema({
         required: true,
         select: false,
     },
+    fornecedores : [
+        { 
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'Emitente' 
+        }
+    ],
     NFCes : [
-        { type: mongoose.Schema.Types.ObjectId, ref: 'NFCe' }
+        { 
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'NFCe' 
+        }
     ]
 });
 

@@ -49,14 +49,12 @@ module.exports = {
                     existingProducts.forEach((product) => {
                         if(String(product._id) == String(item.product)) {
                             product.items.push(item);
+                            product.save();
                         }
                     });
                 }
             });
 
-            Product.updateMany(existingProducts);
-            //existingProducts.save();
-            
             return itens;
         } catch (error) {
             throw "Erro criando itens da NFC-e\n" + error;

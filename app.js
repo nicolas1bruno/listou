@@ -11,8 +11,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//process.env.MONGO_URL
-mongoose.connect('mongodb://localhost:27017/listou', {
+mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true 
 })

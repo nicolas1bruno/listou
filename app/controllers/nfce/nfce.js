@@ -24,11 +24,10 @@ module.exports = {
             const existingNFCe = await NFCe.find({
                 chave: decodedNFCe.chave,
                 consumidor: consumidor
-            });
+            }).exec();
 
-            if (existingNFCe) {
-                res.status(400).send("Você ja cadastrou essa NFC-e");
-                return;
+            if (existingNFCe.length) {
+                return res.status(400).send("Você ja cadastrou essa NFC-e");
             }
 
             const emitente = await EmitenteController.create(decodedNFCe.emitente);                    

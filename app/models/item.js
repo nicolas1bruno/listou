@@ -37,7 +37,11 @@ let ItemSchema = new Schema({
     product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product'
-    }
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
 });
 
 module.exports = mongoose.model('Item', ItemSchema);

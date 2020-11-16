@@ -36,7 +36,9 @@ module.exports = {
                     qtd : item.qtd,
                     un : item.un,
                     vlUnit : item.vlUnit,
-                    vlTotal : item.vlTotal
+                    vlTotal : item.vlTotal,
+
+                    user: nfce.consumidor
                 });
             });
             
@@ -58,6 +60,60 @@ module.exports = {
             return itens;
         } catch (error) {
             throw "Erro criando itens da NFC-e\n" + error;
+        }
+    },
+
+    update : async (req, res) => {
+        try {
+            const { userId } = req;
+        
+            const { itemId, productId } = req.body;
+
+            const item = await Item.findOne({_id: itemId, user: userId}).exec();
+            if (!item) {
+                return res.status(400).send({ message: "Item not found", error: "Item not found"});
+            }
+            
+            const product = await Product.findOne({_id: productId, user: userId}).exec();
+            if (!product) {
+                return res.status(400).send({ message: "Product not found", error: "Product not found"});
+            }
+
+            if (String(item.product) == String(productId)) {
+                return res.status(200).send({message: "Same product"});
+            }
+            
+            if (item.product) {
+                const oldProduct = await Product.findById(item.product);
+                oldProduct.items = oldProduct.items.filter(function(value, index, arr) { 
+                    return String(value) != itemId;
+                });
+                oldProduct.save();
+            }
+
+            item.product = product;
+            item.save();
+
+            // Add item to product
+            product.items.push(item);
+
+            // Search for other items in the same condition
+            let otherItems = await Item.find({codigo: item.codigo, emitente: item.emitente, product: null, user: userId })
+            
+            otherItems.forEach(oItem => {
+                oItem.product = product;
+                oItem.save();
+                // Add itens to product
+                product.items.push(oItem);
+            });
+            
+            // Update product
+            product.save();
+
+            return res.status(200).send({message: "Updated"});
+        } catch (error) {
+            console.log(error);
+            res.status(500).send({ message: "Error updating item", error: error});
         }
     }
 }

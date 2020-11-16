@@ -29,7 +29,7 @@ module.exports = {
             if (existingNFCe.length) {
                 return res.status(400).send("Você ja cadastrou essa NFC-e");
             }
-
+            
             const emitente = await EmitenteController.create(decodedNFCe.emitente);                    
             //console.log(emitente);
 
@@ -47,7 +47,7 @@ module.exports = {
             });
             //console.log('nfce: ' + nfce);
             
-            const itens = await ItemController.create(decodedNFCe.itens, nfce._id);
+            const itens = await ItemController.create(nfce, decodedNFCe);
             
             itens.forEach(item => {
                 nfce.itens.push(item._id);

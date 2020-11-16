@@ -30,6 +30,14 @@ let ItemSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'NFCe'
     },
+    emitente: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Emitente'
+    },
+    product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+    }
 });
 
 module.exports = mongoose.model('Item', ItemSchema);

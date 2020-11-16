@@ -17,6 +17,8 @@ const Billet = require('./controllers/billet/billet');
 const RentalCompany = require('./controllers/rentalCompany/rentalCompany');
 const Payment = require('./controllers/payment/payment');
 const NFCe = require('./controllers/nfce/nfce');
+const Category = require('./controllers/category/category');
+const Product = require('./controllers/product/product');
 
 // Test
 router.get('/',[middlewareAuth.verifyToken],App.test);
@@ -81,5 +83,11 @@ router.post("/authenticate/signin", Auth.signin);
 
 // NFC-e routes'
 router.post("/nfce/new", [middlewareAuth.verifyToken], NFCe.new);
+
+router.post("/category", [middlewareAuth.verifyToken], Category.create);
+router.get("/categories", [middlewareAuth.verifyToken], Category.find);
+
+router.post("/product", [middlewareAuth.verifyToken], Product.create);
+router.get("/products", [middlewareAuth.verifyToken], Product.find);
 
 module.exports = router;

@@ -28,6 +28,7 @@ module.exports = {
 
             if (existingNFCe) {
                 res.status(400).send("Você ja cadastrou essa NFC-e");
+                return;
             }
 
             const emitente = await EmitenteController.create(decodedNFCe.emitente);                    

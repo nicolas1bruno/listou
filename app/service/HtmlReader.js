@@ -97,8 +97,6 @@ function strToNumber(pVlue) {
 }
 
 function strToDateTime(pDateTime) {
-    console.log(pDateTime);
-
     let values = pDateTime.split(' ');
 
     let dateValues = values[0].split('/');

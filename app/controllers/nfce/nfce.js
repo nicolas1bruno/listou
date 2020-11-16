@@ -21,6 +21,15 @@ module.exports = {
             let decodedNFCe = await decode(url);
             //console.log("decodedNFCe: " + decodedNFCe);
 
+            const existingNFCe = await NFCe.find({
+                chave: decodedNFCe.chave,
+                consumidor: consumidor
+            });
+
+            if (existingNFCe) {
+                res.status(400).send("Você ja cadastrou essa NFC-e");
+            }
+
             const emitente = await EmitenteController.create(decodedNFCe.emitente);                    
             //console.log(emitente);
 
@@ -30,6 +39,9 @@ module.exports = {
             }
             
             const nfce = await NFCe.create({
+                numero: decodedNFCe.numero,
+                serie: decodedNFCe.serie,
+                chave: decodedNFCe.chave,
                 emitente: emitente,
                 consumidor: consumidor
             });

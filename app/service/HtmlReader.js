@@ -57,29 +57,31 @@ function rsRead(html) {
             let item = {
                 codigo: values[0],
                 descricao: values[1],
-                qtd: values[2],
+                qtd: strToNumber(values[2]),
                 un: values[3],
-                vlUnit: values[4],
-                vlTotal: values[5],
+                vlUnit: strToNumber(values[4]),
+                vlTotal: strToNumber(values[5])
             }
 
             itens.push(item);
         }
         
-        /*
         //Dados NFCe
         let dadosNFCe = root.querySelectorAll("table")[7].querySelectorAll("td");
-        console.log(dadosNFCe !== null);
-        console.log(dadosNFCe !== undefined);
-        console.log(dadosNFCe[0].rawText);
-
-        nfce.numero = dadosNFCe[0].rawText.match('NFC-e nº: \d+')[0].replace('NFC-e nº: ', '');
-        nfce.serie = dadosNFCe[0].rawText.match('Série: \d+')[0].replace('Série: ', '');
-        nfce.dataEmissao = dadosNFCe[0].rawText.match('Data de Emissão: .+')[0].replace('Data de Emissão: ', '');
-        */
+        
+        let matchs = dadosNFCe[0].rawText.match(/: \d+/gm)
+        
+        nfce.numero = matchs[0].replace(': ', '');
+        nfce.serie = matchs[1].replace(': ', '');
+        
+        matchs = dadosNFCe[0].rawText.match(/(\d{2}\/\d{2}\/\d{4}).*/gm)
+        nfce.dataEmissao = strToDateTime(matchs[0]);
+        
+        nfce.chave = dadosNFCe[3].rawText.replace(/\D/gm, '');
+        
         nfce.emitente = emitente;
         nfce.itens = itens;
-
+                
         return nfce;
     } catch (error) {
         throw "Error reading NFC-e - RS\n" + error;
@@ -88,6 +90,22 @@ function rsRead(html) {
 
 function scRead(html) {
     
+}
+
+function strToNumber(pVlue) {
+    return parseFloat(pVlue.replace(',', '.'));
+}
+
+function strToDateTime(pDateTime) {
+    console.log(pDateTime);
+
+    let values = pDateTime.split(' ');
+
+    let dateValues = values[0].split('/');
+    let timeValues = values[1].split(':');
+    
+    //new Date(year, month, day, hours, minutes, seconds, milliseconds)
+    return new Date(dateValues[2], dateValues[1], dateValues[0], timeValues[0], timeValues[1], timeValues[2], 0);
 }
 
 module.exports["RS"] = rsRead;

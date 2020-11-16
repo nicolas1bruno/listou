@@ -4,6 +4,7 @@ const HTMLParser = require('node-html-parser');
 const rsFind = async (url) => {
     try {
         const html = await Fetcher.fetch(url);
+        
         let root = HTMLParser.parse(html);
         let iframe = root.querySelector("iframe");
         

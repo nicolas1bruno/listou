@@ -2,6 +2,18 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let NFCeSchema = new Schema({
+    numero: {
+        type: mongoose.Number,
+        required: true
+    },
+    serie: {
+        type: mongoose.Number,
+        required: true
+    },
+    chave: {
+        type: String, 
+        required: true
+    },
     emitente: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Emitente'

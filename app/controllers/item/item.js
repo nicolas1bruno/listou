@@ -5,9 +5,9 @@ module.exports = {
         try {
             pItens.forEach(item => {
                 item.NFCe = nfce_id,
-                item.qtd = item.qtd.replace(',', '.'),
-                item.vlUnit = item.vlUnit.replace(',', '.'),
-                item.vlTotal = item.vlTotal.replace(',', '.')
+                item.qtd = item.qtd,
+                item.vlUnit = item.vlUnit,
+                item.vlTotal = item.vlTotal
             });
             
             const itens = await Item.create(pItens);
